@@ -65,7 +65,10 @@ function fromPath(): TaskEither<unknown, string> {
 
     if (result.length > 0) {
       const realpath = fs.realpathSync(result[0]);
-      if (realpath.endsWith(path.join("bin", "java"))) {
+      if (
+        realpath !== "/usr/bin/java" &&
+        realpath.endsWith(path.join("bin", "java"))
+      ) {
         const normalized = path.normalize(path.join(realpath, "..", ".."));
         return TE.right(normalized);
       } else {
